@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyStudyPal - Students</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* เพิ่ม CSS สำหรับ Modal (หน้าต่างสรุปรายงาน) */
+        .modal {
+            display: none; /* ซ่อน modal ไว้ตอนแรก */
+            position: fixed; /* อยู่เหนือเนื้อหาอื่นๆ */
+            z-index: 1000; /* ให้ modal อยู่บนสุด */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* เปิดใช้งาน scroll ถ้าเนื้อหาเยอะ */
+            background-color: rgba(0,0,0,0.4); /* พื้นหลังทึบแสง */
+            display: flex; /* ใช้ flexbox เพื่อจัดกลาง */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%; /* ความกว้างของ modal */
+            max-width: 500px; /* ความกว้างสูงสุด */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .report-summary p {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .report-summary p strong {
+            color: #34495e;
+        }
+        .report-summary .present { color: #28a745; }
+        .report-summary .absent { color: #dc3545; }
+        .report-summary .late { color: #ffc107; }
+        .report-summary .leave { color: #17a2b8; }
+
+        /* Responsive สำหรับปุ่มรายงาน */
+        @media (max-width: 768px) {
+            .report-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="classNameTitle">Students in Class: Loading...</h1> 
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </header>
+
+        <a href="dashboard.html" class="back-button">← Back to Classes</a>
+
+        <div class="form-group" style="display: flex; align-items: flex-end; gap: 10px;">
+            <div style="flex-grow: 1;">
+                <label for="attendanceDate" class="form-label">Select Date:</label>
+                <input type="date" class="form-control" id="attendanceDate">
+            </div>
+            <button id="viewReportBtn" class="btn-primary btn-sm report-button" style="padding: 12px 15px; width: auto; margin-bottom: 15px;">ดูรายงาน</button>
+        </div>
+        <section id="students-section">
+            <h2>Student List</h2>
+            <p id="studentMessage" class="message"></p>
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>รหัสนักศึกษา</th>
+                            <th>ชื่อ-นามสกุล</th>
+                            <th>สถานะ</th> 
+                            <th>จัดการ</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody">
+                        <tr><td colspan="4">Loading students...</td></tr> 
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>รายงานการเช็คแถวประจำวัน</h2>
+            <p><strong>วันที่:</strong> <span id="reportDate"></span></p>
+            <div id="reportSummaryContent" class="report-summary">
+                <p>กำลังโหลดรายงาน...</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/students.js"></script>
+</body>
+</html>
